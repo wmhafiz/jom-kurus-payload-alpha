@@ -3,7 +3,7 @@ import { userRelationship } from './fields/userRelationship'
 import isSelf from './access/isSelf'
 
 export const Weights: CollectionConfig = {
-  slug: 'weight',
+  slug: 'weights',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['id', 'title'],

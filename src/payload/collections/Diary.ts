@@ -6,7 +6,7 @@ import { userRelationship } from './fields/userRelationship'
 import isSelf from './access/isSelf'
 
 export const Diary: CollectionConfig = {
-  slug: 'diary',
+  slug: 'diaries',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['id', 'title'],

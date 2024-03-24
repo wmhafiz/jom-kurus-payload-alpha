@@ -9,13 +9,13 @@
 export interface Config {
   collections: {
     users: User;
-    pages: Page;
     media: Media;
     challenges: Challenge;
-    diary: Diary;
+    diaries: Diary;
     meals: Meal;
     exercises: Exercise;
     workouts: Workout;
+    weights: Weight;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -56,8 +56,9 @@ export interface User {
   goal_type?: ('weight_loss' | 'muscle_gain' | 'running_distance')[] | null;
   goal_weight?: number | null;
   goal_daily_intake?: number | null;
-  goal_exercise_calorie_burnt?: number | null;
+  goal_exercise_calorie_burned?: number | null;
   goal_weekly_exercise?: number | null;
+  goal_date?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -113,31 +114,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "challenges".
  */
 export interface Challenge {
@@ -147,13 +123,13 @@ export interface Challenge {
   status?: ('not_started' | 'ongoing' | 'completed') | null;
   start_date?: string | null;
   end_date?: string | null;
-  participants?: (number | null) | User;
+  participants?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "diary".
+ * via the `definition` "diaries".
  */
 export interface Diary {
   id: number;
@@ -214,6 +190,7 @@ export interface Exercise {
   title?: string | null;
   date: string;
   total_calories?: number | null;
+  total_duration?: number | null;
   workouts?:
     | {
         workout?: (number | null) | Workout;
@@ -248,6 +225,20 @@ export interface Workout {
     };
     [k: string]: unknown;
   } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "weights".
+ */
+export interface Weight {
+  id: number;
+  user: number | User;
+  title?: string | null;
+  date: string;
+  weight: number;
+  photo?: number | Media | null;
   updatedAt: string;
   createdAt: string;
 }

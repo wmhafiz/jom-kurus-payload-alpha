@@ -31,6 +31,7 @@ import { Diary } from '@/payload/collections/Diary'
 import { Exercises } from '@/payload/collections/Exercises'
 import { Workouts } from '@/payload/collections/Workouts'
 import { Weights } from '@/payload/collections/Weights'
+import { BeforeDashboard } from '@/payload/components/BeforeDashboard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -57,6 +58,9 @@ export default buildConfig({
       email: adminUser.email,
       password: adminUser.password,
       prefillOnly: true,
+    },
+    components: {
+      beforeDashboard: [BeforeDashboard],
     },
   },
   async onInit(payload) {
