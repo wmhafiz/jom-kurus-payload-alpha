@@ -23,8 +23,14 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { Users } from '@/payload/collections/Users'
-import { Pages } from '@/payload/collections/Pages'
 import { Media } from '@/payload/collections/Media'
+import { Challenges } from '@/payload/collections/Challenges'
+// import { ActivityLogs } from '@/payload/collections/ActivityLogs'
+import { Meals } from '@/payload/collections/Meals'
+import { Diary } from '@/payload/collections/Diary'
+import { Exercises } from '@/payload/collections/Exercises'
+import { Workouts } from '@/payload/collections/Workouts'
+import { Weights } from '@/payload/collections/Weights'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +42,7 @@ const adminUser = {
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Users, Pages, Media],
+  collections: [Users, Media, Challenges, Diary, Meals, Exercises, Workouts, Weights],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

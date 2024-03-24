@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload/types'
 
 import isAdmin from './access/isAdmin'
 import isAdminOrSelf from './access/isAdminOrSelf'
+import isAnyone from './access/isAnyone'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -9,29 +10,41 @@ export const Users: CollectionConfig = {
     tokenExpiration: 28800, // 8 hours
   },
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: 'nickname',
+    group: 'System',
   },
   access: {
-    read: isAdminOrSelf,
+    read: isAnyone,
     create: isAdmin,
     update: isAdminOrSelf,
     delete: isAdmin,
   },
   fields: [
     {
-      name: 'roles',
-      type: 'select',
-      saveToJWT: true,
-      hasMany: true,
-      defaultValue: ['user'],
-      options: [
+      type: 'row',
+      fields: [
         {
-          label: 'Admin',
-          value: 'admin',
+          name: 'nickname',
+          type: 'text',
+          saveToJWT: true,
+          required: true,
         },
         {
-          label: 'User',
-          value: 'user',
+          name: 'roles',
+          type: 'select',
+          saveToJWT: true,
+          hasMany: true,
+          defaultValue: ['user'],
+          options: [
+            {
+              label: 'Admin',
+              value: 'admin',
+            },
+            {
+              label: 'User',
+              value: 'user',
+            },
+          ],
         },
       ],
     },
@@ -42,10 +55,27 @@ export const Users: CollectionConfig = {
       relationTo: 'media',
     },
     {
-      name: 'nickname',
-      type: 'text',
-      saveToJWT: true,
-      required: true,
+      type: 'row',
+      fields: [
+        {
+          name: 'exp',
+          label: 'Total Experience Points',
+          type: 'number',
+          admin: {
+            readOnly: true,
+          },
+          defaultValue: 0,
+        },
+        {
+          name: 'level',
+          label: 'Current Level',
+          type: 'number',
+          admin: {
+            readOnly: true,
+          },
+          defaultValue: 1,
+        },
+      ],
     },
     {
       type: 'tabs',
@@ -61,6 +91,26 @@ export const Users: CollectionConfig = {
             {
               name: 'lastName',
               type: 'text',
+            },
+            {
+              name: 'dob',
+              type: 'date',
+              label: 'Date of Birth',
+            },
+            {
+              name: 'gender',
+              type: 'select',
+              hasMany: false,
+              options: [
+                {
+                  label: 'Male',
+                  value: 'male',
+                },
+                {
+                  label: 'Female',
+                  value: 'female',
+                },
+              ],
             },
             {
               name: 'biodata',
@@ -82,26 +132,6 @@ export const Users: CollectionConfig = {
               name: 'height',
               type: 'number',
               label: 'Current Height',
-            },
-            {
-              name: 'dob',
-              type: 'date',
-              label: 'Date of Birth',
-            },
-            {
-              name: 'gender',
-              type: 'select',
-              hasMany: true,
-              options: [
-                {
-                  label: 'Male',
-                  value: 'male',
-                },
-                {
-                  label: 'Female',
-                  value: 'female',
-                },
-              ],
             },
           ],
         },
@@ -140,16 +170,21 @@ export const Users: CollectionConfig = {
               label: 'Daily Calorie Intake (kcal)',
             },
             {
-              name: 'goal_exercise_calorie_burnt',
+              name: 'goal_exercise_calorie_burned',
               type: 'number',
               defaultValue: 500,
-              label: 'Calorie Burnt Per Exercise (kcal)',
+              label: 'Calorie Burned Per Exercise (kcal)',
             },
             {
               name: 'goal_weekly_exercise',
               type: 'number',
               defaultValue: 3,
               label: 'How Many Exercise Per Week?',
+            },
+            {
+              name: 'goal_date',
+              type: 'date',
+              label: 'When is the target to hit this goal?',
             },
           ],
         },

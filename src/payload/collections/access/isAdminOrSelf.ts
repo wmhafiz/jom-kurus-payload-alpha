@@ -11,7 +11,7 @@ export const isAdminOrSelf: Access = ({ req: { user } }) => {
 
     // If any other type of user, only provide access to themselves
     return {
-      id: {
+      user: {
         equals: user.id,
       },
     }
