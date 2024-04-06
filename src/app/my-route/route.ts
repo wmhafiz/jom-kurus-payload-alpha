@@ -7,17 +7,17 @@ export const GET = async () => {
   })
 
   const data = await payload.find({
-    collection: 'weights',
-    depth: 0,
-    where: {
-      and: [
-        {
-          user: {
-            equals: 1,
-          },
-        },
-      ],
-    },
+    collection: 'meals',
+    // depth: 0,
+    // where: {
+    //   and: [
+    //     {
+    //       user: {
+    //         equals: 1,
+    //       },
+    //     },
+    //   ],
+    // },
   })
 
   return Response.json(data)
